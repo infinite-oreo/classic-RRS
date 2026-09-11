@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}今日摘要 - classic RRS{% endblock %}
+{% block content %}
+  <h1>今日摘要</h1>
+  <p class="toolbar">
+    {% if show_read %}
+      <a href="{{ url_for('today.show') }}">仅看未读</a>
+    {% else %}
+      <a href="{{ url_for('today.show', show_read=1) }}">显示已读</a>
+    {% endif %}
+  </p>
+
+  {% if not groups %}
+    <p class="empty-state">今天暂无更新</p>
+  {% else %}
+    {% for group in groups %}
+      <section class="feed-group">
+        <h2>{{ group.feed_title }}{% if group.feed_category %} <span class="category">· {{ group.feed_category }}</span>{% endif %}</h2>
+        {% for entry in group.entries %}
+          {% include "_entry_row.html" %}
+        {% endfor %}
+      </section>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

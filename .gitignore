@@ -1,0 +1,12 @@
+CLAUDE.md
+**/CLAUDE.md
+.claude/
+
+venv/
+__pycache__/
+*.pyc
+data/app.db
+data/app.db-wal
+data/app.db-shm
+data/logs/*.log
+data/secret_key

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}收藏夹 - classic RRS{% endblock %}
+{% block content %}
+  <h1>收藏夹</h1>
+  {% if not entries %}
+    <p class="empty-state">还没有收藏任何内容</p>
+  {% else %}
+    {% for entry in entries %}
+      {% include "_entry_row.html" %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}

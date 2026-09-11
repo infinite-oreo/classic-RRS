@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}导入OPML - classic RRS{% endblock %}
+{% block content %}
+  <h1>导入OPML</h1>
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="opml_file" accept=".opml,.xml" required>
+    <button type="submit">导入</button>
+  </form>
+  <p>支持从其他RSS阅读器导出的OPML订阅列表文件,重复的订阅源会自动跳过。</p>
+{% endblock %}

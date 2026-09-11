@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ entry.title or '文章详情' }} - classic RRS{% endblock %}
+{% block content %}
+  <article class="entry-detail">
+    <h1>{{ entry.title or '(无标题)' }}</h1>
+    <p class="entry-meta">
+      来自 {{ entry.feed_title }}
+      {% if entry.author %} · {{ entry.author }}{% endif %}
+      {% if entry.published_at %} · {{ entry.published_at[:16] }}{% endif %}
+    </p>
+
+    {% if entry.feed_content_type == 'podcast' and entry.enclosure_url %}
+      <audio controls src="{{ entry.enclosure_url }}"></audio>
+    {% endif %}
+
+    <div class="entry-body">
+      {{ (entry.content_html or entry.summary or '(无正文,请点击原文链接查看)') | safe }}
+    </div>
+
+    <p class="entry-actions">
+      <a href="{{ entry.link }}" target="_blank" rel="noopener">查看原文</a>
+      <form method="post" action="{{ url_for('entries.mark_read', entry_id=entry.id) }}" style="display:inline">
+        <button type="submit">{{ '标为未读' if entry.is_read else '标为已读' }}</button>
+      </form>
+      <form method="post" action="{{ url_for('entries.mark_favorite', entry_id=entry.id) }}" style="display:inline">
+        <button type="submit">{{ '取消收藏' if entry.is_favorited else '收藏' }}</button>
+      </form>
+    </p>
+  </article>
+{% endblock %}

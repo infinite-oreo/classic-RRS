@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}订阅源管理 - classic RRS{% endblock %}
+{% block content %}
+  <h1>订阅源管理</h1>
+
+  <form method="post" class="feed-form">
+    <input type="text" name="title" placeholder="标题(可留空自动使用feed标题)">
+    <input type="url" name="feed_url" placeholder="RSS/Atom 地址" required>
+    <input type="url" name="site_url" placeholder="网站主页(可选)">
+    <input type="text" name="category" placeholder="分类(可选)">
+    <select name="content_type">
+      <option value="article">文章</option>
+      <option value="podcast">播客</option>
+    </select>
+    <button type="submit">添加订阅源</button>
+  </form>
+
+  <table class="feed-table">
+    <thead>
+      <tr>
+        <th>标题</th><th>分类</th><th>类型</th><th>状态</th><th>最近抓取</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for feed in feeds %}
+        <tr class="{% if not feed.is_active %}is-inactive{% endif %}">
+          <td><a href="{{ feed.site_url or feed.feed_url }}" target="_blank" rel="noopener">{{ feed.title }}</a></td>
+          <td>{{ feed.category or '-' }}</td>
+          <td>{{ '播客' if feed.content_type == 'podcast' else '文章' }}</td>
+          <td>
+            {% if not feed.is_active %}已暂停
+            {% elif feed.last_fetch_status == 'error' %}<span class="error">抓取失败: {{ feed.last_fetch_error }}</span>
+            {% elif feed.last_fetch_status == 'ok' %}正常
+            {% else %}尚未抓取{% endif %}
+          </td>
+          <td>{{ feed.last_fetched_at[:16] if feed.last_fetched_at else '-' }}</td>
+          <td class="feed-actions">
+            <form method="post" action="{{ url_for('feeds.refresh', feed_id=feed.id) }}" style="display:inline">
+              <button type="submit">立即刷新</button>
+            </form>
+            <form method="post" action="{{ url_for('feeds.toggle', feed_id=feed.id) }}" style="display:inline">
+              <button type="submit">{{ '恢复' if not feed.is_active else '暂停' }}</button>
+            </form>
+            <form method="post" action="{{ url_for('feeds.delete', feed_id=feed.id) }}" style="display:inline">
+              <button type="submit">删除</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6">还没有添加任何订阅源</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

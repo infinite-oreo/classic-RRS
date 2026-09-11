@@ -1,0 +1,144 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+  color: #222;
+  background: #fafafa;
+  line-height: 1.5;
+}
+
+.topnav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.topnav a {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.topnav a:hover { text-decoration: underline; }
+
+.flash {
+  background: #eef7ee;
+  border: 1px solid #bfe3bf;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+h1 { font-size: 22px; margin-bottom: 12px; }
+h2 { font-size: 16px; margin: 24px 0 8px; }
+
+.toolbar { font-size: 14px; }
+
+.empty-state {
+  color: #888;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.feed-group {
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+.category { color: #999; font-weight: normal; }
+
+.entry-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.entry-row.is-read { opacity: 0.5; }
+
+.entry-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.entry-title {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.entry-title:hover { text-decoration: underline; }
+
+.entry-time { color: #999; font-size: 12px; white-space: nowrap; }
+
+.entry-actions {
+  margin-top: 4px;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.entry-actions button, .entry-actions a {
+  font-size: 12px;
+  color: #555;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 2px 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+audio { width: 100%; margin: 6px 0; }
+
+.entry-detail .entry-meta { color: #888; font-size: 13px; }
+.entry-detail .entry-body { margin: 20px 0; }
+.entry-detail .entry-actions { display: flex; gap: 12px; }
+.entry-detail .entry-actions button {
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.feed-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.feed-form input, .feed-form select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.feed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.feed-table th, .feed-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.feed-table tr.is-inactive { color: #aaa; }
+
+.feed-actions { display: flex; gap: 6px; }
+.feed-actions button {
+  font-size: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.error { color: #c0392b; }

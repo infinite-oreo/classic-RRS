@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}classic RRS{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="{{ url_for('today.show') }}">今日摘要</a>
+    <a href="{{ url_for('archive.show') }}">历史回看</a>
+    <a href="{{ url_for('favorites.index') }}">收藏夹</a>
+    <a href="{{ url_for('feeds.index') }}">订阅源管理</a>
+    <a href="{{ url_for('opml.export') }}">导出OPML</a>
+    <a href="{{ url_for('opml.import_view') }}">导入OPML</a>
+  </nav>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

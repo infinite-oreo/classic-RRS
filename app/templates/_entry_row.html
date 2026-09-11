@@ -1,0 +1,24 @@
+<div id="entry-{{ entry.id }}" class="entry-row {% if entry.is_read %}is-read{% endif %}">
+  <div class="entry-main">
+    <a class="entry-title" href="{{ url_for('entries.detail', entry_id=entry.id) }}">
+      {{ entry.title or '(无标题)' }}
+    </a>
+    {% if entry.published_at %}
+      <span class="entry-time">{{ entry.published_at[:16] }}</span>
+    {% endif %}
+  </div>
+  {% if entry.feed_content_type == 'podcast' and entry.enclosure_url %}
+    <audio controls preload="none" src="{{ entry.enclosure_url }}"></audio>
+  {% endif %}
+  <div class="entry-actions">
+    <button hx-post="{{ url_for('entries.mark_read', entry_id=entry.id) }}"
+            hx-target="#entry-{{ entry.id }}" hx-swap="outerHTML">
+      {{ '标为未读' if entry.is_read else '标为已读' }}
+    </button>
+    <button hx-post="{{ url_for('entries.mark_favorite', entry_id=entry.id) }}"
+            hx-target="#entry-{{ entry.id }}" hx-swap="outerHTML">
+      {{ '取消收藏' if entry.is_favorited else '收藏' }}
+    </button>
+    <a href="{{ entry.link }}" target="_blank" rel="noopener">原文链接</a>
+  </div>
+</div>

@@ -41,6 +41,28 @@ h2 { font-size: 16px; margin: 24px 0 8px; }
 
 .toolbar { font-size: 14px; }
 
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  margin: 8px 0 16px;
+}
+
+.category-filter a {
+  color: #555;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.category-filter a.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+
 .empty-state {
   color: #888;
   padding: 40px 0;

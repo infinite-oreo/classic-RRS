@@ -25,6 +25,14 @@ def get_feed_by_url(conn, feed_url):
     return conn.execute("SELECT * FROM feeds WHERE feed_url = ?", (feed_url,)).fetchone()
 
 
+def list_categories(conn):
+    rows = conn.execute(
+        "SELECT DISTINCT category FROM feeds WHERE category IS NOT NULL AND category != '' "
+        "ORDER BY category COLLATE NOCASE"
+    ).fetchall()
+    return [row["category"] for row in rows]
+
+
 def create_feed(conn, title, feed_url, site_url=None, category=None, content_type="article",
                  fetch_interval_minutes=60, is_active=1):
     cur = conn.execute(

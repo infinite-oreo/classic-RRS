@@ -26,11 +26,18 @@ def _local_day_bounds(day=None):
 @bp.route("/today")
 def show():
     show_read = request.args.get("show_read") == "1"
+    category = request.args.get("category") or None
     conn = db.get_db()
     start_utc, end_utc = _local_day_bounds()
     rows = models.entries_fetched_between(conn, start_utc, end_utc, show_read=show_read)
     groups = models.group_entries_by_feed(rows)
+    if category:
+        groups = [g for g in groups if g["feed_category"] == category]
     groups.sort(
         key=lambda g: g["entries"][0]["published_at"] or "", reverse=True
     )
-    return render_template("today.html", groups=groups, show_read=show_read)
+    categories = models.list_categories(conn)
+    return render_template(
+        "today.html", groups=groups, show_read=show_read,
+        categories=categories, selected_category=category,
+    )

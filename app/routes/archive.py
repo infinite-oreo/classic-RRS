@@ -19,11 +19,18 @@ def show():
     else:
         day = datetime.date.today()
 
+    category = request.args.get("category") or None
     conn = db.get_db()
     start_utc, end_utc = _local_day_bounds(day)
     rows = models.entries_fetched_between(conn, start_utc, end_utc, show_read=True)
     groups = models.group_entries_by_feed(rows)
+    if category:
+        groups = [g for g in groups if g["feed_category"] == category]
     groups.sort(
         key=lambda g: g["entries"][0]["published_at"] or "", reverse=True
     )
-    return render_template("archive.html", groups=groups, day=day)
+    categories = models.list_categories(conn)
+    return render_template(
+        "archive.html", groups=groups, day=day,
+        categories=categories, selected_category=category,
+    )

@@ -4,11 +4,22 @@
   <h1>今日摘要</h1>
   <p class="toolbar">
     {% if show_read %}
-      <a href="{{ url_for('today.show') }}">仅看未读</a>
+      <a href="{{ url_for('today.show', category=selected_category) }}">仅看未读</a>
     {% else %}
-      <a href="{{ url_for('today.show', show_read=1) }}">显示已读</a>
+      <a href="{{ url_for('today.show', category=selected_category, show_read=1) }}">显示已读</a>
     {% endif %}
   </p>
+
+  {% if categories %}
+    <p class="category-filter">
+      <a href="{{ url_for('today.show', show_read=1 if show_read else None) }}"
+         class="{{ 'active' if not selected_category else '' }}">全部</a>
+      {% for cat in categories %}
+        <a href="{{ url_for('today.show', category=cat, show_read=1 if show_read else None) }}"
+           class="{{ 'active' if selected_category == cat else '' }}">{{ cat }}</a>
+      {% endfor %}
+    </p>
+  {% endif %}
 
   {% if not groups %}
     <p class="empty-state">今天暂无更新</p>
